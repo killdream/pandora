@@ -229,10 +229,9 @@ function from_mappings(origin, mapping) {
 // particular set of properties from the underlying service, as well as
 // declare formal requirements and overrides.
 //
-// All of these combinators are pure. Not in the sense that they don't
-// mutate the wrapper object, but rather, they don't mutate the
-// underlying, wrapped service. They always return a reference to the
-// instance calling the combinator.
+// All of these combinators are pure. They always return a brand new
+// Pandora instance. The underlying services, requirements and overrides
+// are also cloned everytime a new instance is made.
 //
 //
 // :Interface: Pandora
@@ -250,14 +249,14 @@ var Pandora = {
   ////// Function make
   // Returns a new Pandora wrapper instance for the given `object'.
   //
-  // make :: Object -> Pandora
+  // make :: Object, [String], {String -> Bool} -> Pandora
   make:
-  function _make(object) {
+  function _make(object, required, overrides) {
     var instance = inherit(this)
 
-    instance._value     = clone(object || {})
-    instance._required  = []
-    instance._overrides = {}
+    instance._value     = clone(object    || {})
+    instance._required  = slice(required  || this._required  || [])
+    instance._overrides = clone(overrides || this._overrides || {})
 
     return instance }
 
@@ -266,7 +265,7 @@ var Pandora = {
   // Unwraps this Pandora instance, checking if the requirements are
   // met.
   //
-  // value :: @this:Pandora -> Object
+  // value :: @Pandora -> Object
 , value:
   function _value() {
     return merge(this) }
@@ -275,44 +274,43 @@ var Pandora = {
   ////// Function only
   // Defines a new service that exposes only the given names.
   //
-  // only :: @this:Pandora*, String... -> this
+  // only :: @Pandora, String... -> Pandora
 , only:
   function _only() {
-    this._value = from_properties(this._value, slice(arguments))
-    return this }
+    return this.make(from_properties(this._value, slice(arguments))) }
 
 
   ////// Function hide
   // Defines a new service that *does not* expose the given names.
   //
-  // hide :: @this:Pandora*, String... -> this
+  // hide :: @Pandora, String... -> Pandora
 , hide:
   function _hide() {
     var names = slice(arguments)
     names = keys(this._value).filter(function(key) {
                                        return !~names.indexOf(key) })
-    this._value = from_properties(this._value, names)
-    return this }
+
+    return this.make(from_properties(this._value, names)) }
 
 
   ////// Function prefix
   // Defines a new service that prefixes all names with the given
   // prefix.
   //
-  // prefix :: @this:Pandora*, String -> this
+  // prefix :: @Pandora, String -> Pandora
 , prefix:
   function _prefix(name) {
-    this._value = from_mappings( this._value
-                               , function(key){ return name + key })
-    return this }
+    return this.make(from_mappings(this._value, function(key){
+                                                  return name + key })) }
+
 
 
   ////// Function alias
   // Defines a new service where keys are transformed by the given
   // mapping function or object.
   //
-  // alias :: @this:Pandora*, (String -> String) -> this
-  // alias :: @this:Pandora*, {String -> String} -> this
+  // alias :: @Pandora, (String -> String) -> Pandora
+  // alias :: @Pandora, {String -> String} -> Pandora
 , alias:
   function _alias(map) {
     var mapping = callable_p(map)?  map
@@ -320,23 +318,21 @@ var Pandora = {
                                       return key in map?      map[key]
                                       :      /* otherwise */  key }
 
-    this._value = from_mappings(this._value, mapping)
-    return this }
+    return this.make(from_mappings(this._value, mapping)) }
 
 
   ////// Function map
   // Defines a new service where *values* are transformed by the given
   // mapping function.
   //
-  // map :: @this:Pandora*, (a, String, {String -> a} -> a) -> this
+  // map :: @Pandora, (a, String, {String -> a} -> a) -> Pandora
 , map:
   function _map(mapping) {
     var value = this._value
-    this._value = keys(value).reduce( function(result, key) {
-                                        result[key] = mapping(value[key], key, value)
-                                        return result }
-                                    , {} )
-    return this }
+    return this.make(keys(value).reduce( function(result, key) {
+                                           result[key] = mapping(value[key], key, value)
+                                           return result }
+                                       , {} ))}
 
 
   ////// Function require
@@ -345,11 +341,10 @@ var Pandora = {
   // Required names *must* be implemented in the unwrapped module,
   // otherwise it's an error.
   //
-  // require :: @this:Pandora*, String... -> this
+  // require :: @Pandora, String... -> Pandora
 , require:
   function _require() {
-    this._required.push.apply(this._required, arguments)
-    return this }
+    return this.make(this._value, this._required.concat(slice(arguments))) }
 
 
   ////// Function override
@@ -359,13 +354,13 @@ var Pandora = {
   // key collision happens. Note that it's still an error for two
   // different wrappers to define an override for the same key.
   //
-  // override :: @this:Pandora*, String... -> this
+  // override :: @Pandora, String... -> Pandora
 , override:
   function _override() {
-    slice(arguments).forEach( function(key) {
-                                this._overrides[key] = true }
-                            , this )
-    return this }
+    var overrides = clone(this._overrides)
+    slice(arguments).forEach(function(key){ overrides[key] = true })
+
+    return this.make(this._value, this._required, overrides) }
 }
 
 

@@ -158,8 +158,9 @@ describe('{} pandora', function() {
       it('Should add all given keys as required.', function() {
         var m = _({ a: 1, b: 2 }).require('a', 'b', 'c')
         expect(m._required).to.eql(['a','b','c'])
-        m.require('a', 'd', 'e')
-        expect(m._required).to.hold(['a', 'b', 'c', 'd', 'e'])
+        var z = m.require('a', 'd', 'e')
+        expect(z._required).to.hold(['a', 'b', 'c', 'd', 'e'])
+        expect(m._required).to.eql(['a','b','c'])
       })
     })
 
@@ -167,8 +168,9 @@ describe('{} pandora', function() {
       it('Should add all given keys as overrides.', function() {
         var m = _({ a: 1, b: 2 }).override('a', 'b')
         expect(m._overrides).to.eql({ a: true, b: true })
-        m.override('a', 'c')
-        expect(m._overrides).to.eql({ a: true, b: true, c: true })
+        var z = m.override('a', 'c')
+        expect(z._overrides).to.eql({ a: true, b: true, c: true })
+        expect(m._overrides).to.eql({ a: true, b: true })
       })
     })
   })
