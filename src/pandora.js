@@ -53,7 +53,7 @@ function pandora(service) {
   return Pandora.make(service) }
 
 
-function module_() {
+function merge() {
   var boxed     = slice(arguments)
   var required  = []
   var overrides = {}
@@ -126,7 +126,7 @@ var Pandora = {
 
 , value:
   function _value() {
-    return module_(this) }
+    return merge(this) }
 
 
 , only:
@@ -215,7 +215,7 @@ function raise(error) { throw error }
 
 //// -- Exports --------------------------------------------------------
 module.exports = { pandora : pandora
-                 , module  : module_
+                 , merge   : merge
                  , Pandora : Pandora
 
                  , internal: { identity                  : identity

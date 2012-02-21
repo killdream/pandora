@@ -22,7 +22,7 @@ expect.Assertion.prototype.hold = function(items) {
 describe('{} pandora', function() {
   var pandora = require('../src/pandora')
   var _       = pandora.pandora
-  var $       = pandora.module
+  var $       = pandora.merge
   var proto   = Object.getPrototypeOf
 
   describe('λ pandora', function() {
@@ -33,7 +33,7 @@ describe('{} pandora', function() {
     })
   })
 
-  describe('λ module', function() {
+  describe('λ merge', function() {
     it('Should merge all Pandora wrappers into one module.', function() {
       var m = $(_({ a: 1 }), _({ b: 2 }), _({ c: 3 }), _({ d: 4 }))
       expect(m).to.eql({ a: 1, b: 2, c: 3, d: 4 })
