@@ -282,12 +282,12 @@ var Pandora = {
     return this }
 
 
-  ////// Function hiding
-  // Defines a new service that exposes all but the given names.
+  ////// Function hide
+  // Defines a new service that *does not* expose the given names.
   //
-  // hiding :: @this:Pandora*, String... -> this
-, hiding:
-  function _hiding() {
+  // hide :: @this:Pandora*, String... -> this
+, hide:
+  function _hide() {
     var names = slice(arguments)
     names = keys(this._value).filter(function(key) {
                                        return !~names.indexOf(key) })
@@ -307,14 +307,14 @@ var Pandora = {
     return this }
 
 
-  ////// Function aliasing
+  ////// Function alias
   // Defines a new service where keys are transformed by the given
   // mapping function or object.
   //
-  // aliasing :: @this:Pandora*, (String -> String) -> this
-  // aliasing :: @this:Pandora*, {String -> String} -> this
-, aliasing:
-  function _aliasing(map) {
+  // alias :: @this:Pandora*, (String -> String) -> this
+  // alias :: @this:Pandora*, {String -> String} -> this
+, alias:
+  function _alias(map) {
     var mapping = callable_p(map)?  map
                 : /* otherwise */   function(key) {
                                       return key in map?      map[key]

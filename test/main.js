@@ -121,10 +121,10 @@ describe('{} pandora', function() {
       })
     })
 
-    describe('λ hiding', function() {
+    describe('λ hide', function() {
       it('Should keep all but the given keys.', function() {
         var m = _({ a: 1, b: 2, c: 3 })
-        expect(m.hiding('b').value()).to.only.have.keys('a', 'c')
+        expect(m.hide('b').value()).to.only.have.keys('a', 'c')
       })
     })
 
@@ -135,15 +135,15 @@ describe('{} pandora', function() {
       })
     })
 
-    describe('λ aliasing', function() {
+    describe('λ alias', function() {
       it('Fun a  => Should map target keys as the mapper function.', function() {
         var m = _({ a: 1, b: 2, c: 3 })
-        expect(m.aliasing(function(k){ return k.toUpperCase() }).value())
+        expect(m.alias(function(k){ return k.toUpperCase() }).value())
           .to.only.have.keys('A', 'B', 'C')
       })
       it('{k->a} => Should map target keys as the dictionary.', function() {
         var m = _({ a: 1, b: 2, c: 3 })
-        expect(m.aliasing({ a: 'd' }).value()).to.only.have.keys('b', 'c', 'd')
+        expect(m.alias({ a: 'd' }).value()).to.only.have.keys('b', 'c', 'd')
       })
     })
 
