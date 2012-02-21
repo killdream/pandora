@@ -77,7 +77,7 @@ function copy_keys(origin, target, overrides) {
   var module = origin._value
   keys(module).forEach(function(key) {
                          !(key in target)?   target[key] = module[key]
-                         : override_p(key)?  target[key]    = module[key]
+                         : override_p(key)?  target[key] = module[key]
                          : !overrides[key]?  raise(PandoraCollisionE(key))
                          : /* otherwise */   null // already overriden
 
@@ -147,16 +147,16 @@ var Pandora = {
 , prefix:
   function _prefix(name) {
     this._value = with_mappings( this._value
-                               , function(k){ return name + k })
+                               , function(key){ return name + key })
     return this }
 
 
 , aliasing:
   function _aliasing(map) {
     var mapping = callable_p(map)?  map
-                : /* otherwise */   function(k) {
-                                      return k in map?        map[k]
-                                      :      /* otherwise */  k }
+                : /* otherwise */   function(key) {
+                                      return key in map?      map[key]
+                                      :      /* otherwise */  key }
 
     this._value = with_mappings(this._value, mapping)
     return this }
