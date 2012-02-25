@@ -5,9 +5,8 @@ Pandora
 Pandora is a module abstraction library, that brings combinators for
 handling first-class modules in JavaScript. Modules are treated as
 simple native objects, which can already be handled through the
-object services provided by the JavaScript language itself.
+object services provided by the JavaScript language itself::
 
-::
    // some/module
    module.exports = { method1: ...
                     , method2: ...
