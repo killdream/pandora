@@ -1,4 +1,4 @@
-var expect = require('expect.js')
+var expect = typeof expect != undefined?  expect : require('expect.js')
 
 expect.Assertion.prototype.raise = function(name) {
   expect(this.obj).to.be.a('function')
@@ -18,9 +18,13 @@ expect.Assertion.prototype.hold = function(items) {
              , 'expected [' + this.obj + '] not to hold [ ' + items + ']') }
 
 
-
 describe('{} pandora', function() {
-  var pandora = require('../src/pandora')
+  var node_p     = typeof process != undefined && process.env
+  var coverage_p = node_p && process.env.MOCHA_TEST_ENV
+  var pandora    = coverage_p?      require('../src-cov/pandora')
+                 : node_p?          require('../src/pandora')
+                 : /* otherwise */  require('/pandora')
+
   var _       = pandora.pandora
   var $       = pandora.merge
   var proto   = Object.getPrototypeOf
