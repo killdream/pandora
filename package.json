@@ -2,7 +2,7 @@
   "author": "Quildreen Motta <quildreen@gmail.com> (http://killdream.github.com/)",
   "name": "pandora",
   "description": "Combinators for pure and declarative first-class modules.",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "git://github.com/killdream/pandora.git"
@@ -12,9 +12,13 @@
     "test": "mocha"
   },
   "engines": {
-    "node": "~0.6.7"
+    "node": ">= 0.5.0"
   },
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "*",
+    "expect.js": "*",
+    "browserify": "*"
+  },
   "optionalDependencies": {}
 }
