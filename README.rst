@@ -60,6 +60,22 @@ With Node.js and NPM, just do the easy-modo install::
     # Then require it as usual
     node> var pandora = require('pandora')
 
+To install in a browser, point your files to ``build/pandora.js`` or
+``build/pandora.min.js``. Note that you'll have to include
+``browserify`` separately — a barebones build is also on the ``build``
+folder.
+
+.. codeblock:: html
+
+    <html>
+      <head><title>Foo!</title></head>
+      <body>
+        ( ... )
+        <script src="/path/to/browserify.js"></script>
+        <script src="/path/to/pandora.js"></script>
+        <script> /* use pandora here */ </script>
+      </body>
+    </html>
 
 If you want to live on the edge, you can also install directly from the
 `Github`_ repository.
@@ -81,6 +97,13 @@ path and just run ``mocha``::
     # Alternatively you can use npm
     $ npm run-script test
 
+For running the coverage reports, you'll need `jscoverage`_ installed
+and a recent version of `mocha`_::
+
+    $ export MOCHA_TEST_ENV=1
+    $ mocha --reporter html-cov > test/coverage.html
+
+To run tests in a browser, just open the ``test/browser/index.html`` page.
 
 .. _mocha: http://visionmedia.github.com/mocha
 .. _expect.js: http://github.com/visionmedia/expect.js
