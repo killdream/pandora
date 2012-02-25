@@ -97,6 +97,7 @@ For running the coverage reports, you'll need `jscoverage`_ installed
 and a recent version of `mocha`_::
 
     $ export MOCHA_TEST_ENV=1
+    $ jscoverage src src-cov
     $ mocha --reporter html-cov > test/coverage.html
 
 To run tests in a browser, just open the ``test/browser/index.html`` page.
