@@ -7,8 +7,7 @@ handling first-class modules in JavaScript. Modules are treated as
 simple native objects, which can already be handled through the
 object services provided by the JavaScript language itself.
 
-
-.. code-block:: js
+::
    // some/module
    module.exports = { method1: ...
                     , method2: ...
@@ -63,9 +62,7 @@ With Node.js and NPM, just do the easy-modo install::
 To install in a browser, point your files to ``build/pandora.js`` or
 ``build/pandora.min.js``. Note that you'll have to include
 ``browserify`` separately — a barebones build is also on the ``build``
-folder.
-
-.. codeblock:: html
+folder::
 
     <html>
       <head><title>Foo!</title></head>
