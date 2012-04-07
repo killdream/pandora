@@ -69,7 +69,7 @@ describe('{} pandora', function() {
       expect(function(){ $(a, b) }).to.not.throwException()
     })
     it('Should error if any requirement isn\'t met.', function() {
-      var a = _({ a: 1 }).require('b')
+      var a = _({ a: 1 }).need('b')
       var b = _({ b: 2 })
       var c = _({ c: 3 })
 
@@ -112,7 +112,7 @@ describe('{} pandora', function() {
     describe('λ value', function() {
       it('Should resolve the module for this Pandora wrapper alone.', function() {
         expect(_({ a: 1 }).value()).to.eql({ a: 1 })
-        expect(function(){ _({ a: 1 }).require('b').value() })
+        expect(function(){ _({ a: 1 }).need('b').value() })
           .to.raise('PandoraNotSatisfiedE')
         expect(_({ a: 1 }).override('a').value()).to.eql({ a: 1 })
       })
@@ -158,11 +158,11 @@ describe('{} pandora', function() {
       })
     })
 
-    describe('λ require', function() {
+    describe('λ need', function() {
       it('Should add all given keys as required.', function() {
-        var m = _({ a: 1, b: 2 }).require('a', 'b', 'c')
+        var m = _({ a: 1, b: 2 }).need('a', 'b', 'c')
         expect(m._required).to.eql(['a','b','c'])
-        var z = m.require('a', 'd', 'e')
+        var z = m.need('a', 'd', 'e')
         expect(z._required).to.hold(['a', 'b', 'c', 'd', 'e'])
         expect(m._required).to.eql(['a','b','c'])
       })

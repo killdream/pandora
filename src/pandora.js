@@ -286,9 +286,9 @@ var Pandora = {
   // hide :: @Pandora, String... -> Pandora
 , hide:
   function _hide() {
-    var names = slice(arguments)
-    names = keys(this._value).filter(function(key) {
-                                       return !~names.indexOf(key) })
+    var hidden = slice(arguments)
+    var names  = keys(this._value).filter(function(key) {
+                                            return !~hidden.indexOf(key) })
 
     return this.make(from_properties(this._value, names)) }
 
@@ -335,15 +335,15 @@ var Pandora = {
                                        , {} ))}
 
 
-  ////// Function require
+  ////// Function need
   // Marks the given names as required.
   //
   // Required names *must* be implemented in the unwrapped module,
   // otherwise it's an error.
   //
-  // require :: @Pandora, String... -> Pandora
-, require:
-  function _require() {
+  // need :: @Pandora, String... -> Pandora
+, need:
+  function _need() {
     return this.make(this._value, this._required.concat(slice(arguments))) }
 
 
