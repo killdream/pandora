@@ -22,7 +22,7 @@ object services provided by the JavaScript language itself::
    var module = pandora(require('some/module'))
                   .hide('method1', 'method2')
                   .alias({method3: 'my_method'})
-                  .require('method4')
+                  .need('method4')
                   
    var module2 = pandora(require('some/other/module'))
                    .override('method4')
@@ -104,6 +104,7 @@ To run tests in a browser, just open the ``test/browser/index.html`` page.
 
 .. _mocha: http://visionmedia.github.com/mocha
 .. _expect.js: http://github.com/visionmedia/expect.js
+.. _jscoverage: https://github.com/visionmedia/node-jscoverage
 
 
 Getting support
