@@ -410,18 +410,8 @@ function raise(error) { throw error }
 
 
 //// -- Exports --------------------------------------------------------
-module.exports = { pandora : pandora
-                 , merge   : merge
-                 , Pandora : Pandora
+pandora.pandora = pandora
+pandora.merge   = merge
+pandora.Pandora = Pandora
 
-                 , internal: { identity                  : identity
-                             , callable_p                : callable_p
-                             , satisfied_p               : satisfied_p
-                             , from_properties           : from_properties
-                             , from_mappings             : from_mappings
-                             , copy_keys                 : copy_keys
-
-                             , raise                     : raise
-                             , PandoraNotSatisfiedE      : PandoraNotSatisfiedE
-                             , PandoraCollisionE         : PandoraCollisionE
-                             , PandoraOverrideCollisionE : PandoraOverrideCollisionE }}
+module.exports = pandora
