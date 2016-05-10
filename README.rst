@@ -35,7 +35,7 @@ object services provided by the JavaScript language itself::
    pack.my_method() // => some/module
 
 
-Pandora extends these core services with a series of pure monadic
+Pandora extends these core services with a series of pure
 combinators, which brings a declarative-ish syntax for module
 definition and formal contracts a module expects to be met.
 
