@@ -102,7 +102,7 @@ and a recent version of `mocha`_::
 
 To run tests in a browser, just open the ``test/browser/index.html`` page.
 
-.. _mocha: http://visionmedia.github.com/mocha
+.. _mocha: http://mochajs.org/
 .. _expect.js: http://github.com/visionmedia/expect.js
 .. _jscoverage: https://github.com/visionmedia/node-jscoverage
 
